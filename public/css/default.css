@@ -1,0 +1,223 @@
+@CHARSET "UTF-8";
+
+/**
+ * Generic HTML element style
+ */
+
+body {
+	font-family: Georgia, serif;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+    color: #3468BB;
+}
+
+h1, h2, h3, h4 {
+	margin: 0;
+	padding: 0;
+}
+
+/**
+ * Main Page Containers
+ */
+
+#page-title {
+	margin: 0;
+	padding: 1em;
+	background-color: #3468BB;
+	color: white;
+}
+
+#page-content {
+	float: left;
+	margin: 0;
+	padding: 1em;
+	width: 78%;
+}
+
+#page-sidebar {
+	float: right;
+	width: 18%;
+	padding-top: 1em;
+	padding-right: 1em;
+}
+
+#page-footer {
+	clear: both;
+	margin: 0;
+	padding-top: 1em;
+	text-align: center;
+	font-size: 9pt;
+	color: #999;
+}
+
+/**
+ * Page Heading
+ */
+
+#page-title h1 {
+    float: left;
+	margin: 0;
+	padding: 0;
+}
+
+#page-title h3 {
+	margin: 0;
+	padding: 0;
+	clear: left;
+	/* float: left;
+	width: 40% */
+}
+
+#page-title #page-title-toolbox {
+    float: right;
+    padding: 1em;
+}
+
+#page-title a {
+    color: white;	
+}
+
+/**
+ * Page Content 
+ */
+
+
+/**
+ * Forms
+ */
+
+form dt {
+	float: left;
+	width: 10em;
+	text-align: right;
+	padding-right: 1em;
+}
+
+form dt .required {
+    font-weight: bold;
+}
+
+form dd {
+	margin-bottom: 1em;
+}
+
+form dd ul.errors {
+	padding: 0;
+	list-style-type: none;
+	margin-left: 10em;
+	font-size: 10pt;
+	color: #c33;
+	font-weight: bold;
+}
+
+form dd ul.errors li {
+    padding: 2px;
+	margin: 0;
+}
+
+form dd p.description {
+	margin: 2px;
+	margin-left: 10em;
+	font-size: 10pt;
+	color: #777;
+}
+
+form .input-big {
+	font-size: 15pt;
+}
+
+form .input-big input {
+	font-size: 15pt;
+	width: 30em;
+}
+
+form .button-big {
+	font-size: 14pt;
+}
+
+/**
+ * Comments
+ */
+.comment-form {
+    font-size: 10pt;
+}
+
+.comment-form dt {
+	width: 12em;
+}
+
+.comment-form dd {
+	margin-bottom: 0.5em;
+}
+	
+/**
+ * Post List
+ */
+
+.post-list-toolbox {
+	height: 2em;
+	padding: 0.2em 0;
+}
+
+.post-list-toolbox .post-list-paginator {
+    float: right;
+    padding-top: 0.3em;
+}
+
+.post-info {
+	font-size: 10pt;
+}
+
+.post-info span {
+	display: block;
+}
+
+.post .content {
+	padding: 1em 0 0 2em;
+	margin-bottom: 3em;
+}
+
+/**
+ * Messages 
+ */
+
+.message {
+	border: 1px solid; 
+	padding: 3px;
+	padding-left: 22px;
+	font-size: 10pt;
+}
+
+.info {
+	border-color: #A3C6FF;
+    background: #EDF4FF url(../images/information.png) 3px center no-repeat; 
+}
+
+/**
+ * Comments
+ */
+.comments {
+	padding: 0.5em 0 2em 1em;  
+}
+
+.comments .comment {
+	margin: 1em;
+	background-color: #f0f0f0;
+	font-size: 10pt;
+}
+
+.comments .comment-info {
+	padding: 3px;
+	background-color: #A3C6FF; 
+}
+
+.comments .comment-info span {
+	margin-right: 2em;
+}
+
+.comments .comment-content {
+	padding: 3px;
+}

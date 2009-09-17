@@ -1,0 +1,45 @@
+<?php 
+
+/**
+ * Post view template 
+ * 
+ */
+
+$this->headTitle($this->post->title);
+?>
+<?php if ($this->message): ?>
+    <?php echo $this->message($this->message); ?>
+<?php endif; ?>
+
+<div class="post">
+    <h2><?php echo htmlspecialchars($this->post->title) ?></h2>
+    <div class="post-info">
+        <span><?php echo $this->timeFormat($this->post->created_at) ?></span>
+        <span><?php echo $this->tagsFormat($this->post->tags) ?></span>
+    </div>
+    
+    <div class="content">
+        <?php echo $this->contentFormat($this->post->content) ?>
+    </div>
+</div>
+
+<h4>Comments</h4>
+<div class="comments">
+<?php if (empty($this->comments)): ?>
+    <div class="message info">
+        No comments yet - if you post first, you get 3 points! 
+    </div>
+<?php else: ?>
+    <div class="comments-info"><?php echo count($this->comments) ?> comments:</div>
+
+<?php foreach($this->comments as $comment): /* @var $comment Stoa_Model_Comment */ ?>
+    <?php echo $this->commentFormat($comment)?>
+<?php endforeach; ?>
+
+<?php endif; ?>
+</div>
+
+<h4>Post a comment</h4>
+<div class="comment-form">
+    <?php echo $this->commentForm; ?>
+</div>

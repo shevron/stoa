@@ -1,0 +1,31 @@
+<div class="post-list-toolbox">
+    <div class="post-list-paginator">
+        <a href="#">first</a> &nbsp;
+        <a href="#">&lt;&lt;</a> &nbsp;        
+        7 out of 9 &nbsp;
+        <a href="#">&gt;&gt;</a> &nbsp;
+        <a href="#">last</a> &nbsp;
+    </div>
+</div>
+
+<div class="post-list">
+<?php if (! empty($this->postList)): ?>
+<?php foreach($this->postList as $post): /* @var $post Stoa_Model_Post */ ?>
+    <?php echo $this->postListItem($post); ?>
+<?php endforeach; ?>
+<?php else: ?>
+    <div class="message info">
+        Sorry, but it seems that there are currently no posts in this blog. Too bad! 
+    </div>
+<?php endif; ?>
+</div>
+
+<div class="post-list-toolbox">
+    <div class="post-list-paginator">
+        <a href="#">first</a> &nbsp;
+        <a href="#">&lt;&lt;</a> &nbsp;        
+        7 out of 9 &nbsp;
+        <a href="#">&gt;&gt;</a> &nbsp;
+        <a href="#">last</a> &nbsp;
+    </div>
+</div>
