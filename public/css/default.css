@@ -188,6 +188,13 @@ form .button-big {
     margin: 1em 0;	
 }
 
+.related-tags {
+	float: right;
+	position: relative;
+	top: -1.5em;
+	left: -3em;
+}
+
 .post-info {
 	font-size: 10pt;
 }

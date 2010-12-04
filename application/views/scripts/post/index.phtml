@@ -11,7 +11,10 @@
 <?php if ($this->tag): ?>
 <div class="post-list-title">
     <h2>Posts tagged with '<span class="tag"><?php echo htmlspecialchars($this->tag)?></span>':</h2>
-    Related Tags: <?php echo $this->tagCloud($this->tag); ?> 
+    <div class="related-tags">
+        <span>Related Tags:</span> 
+        <?php echo $this->tagCloud($this->tag); ?>
+    </div> 
 </div>
 <?php endif; ?>
 
