@@ -62,14 +62,43 @@ class Stoa_Model_Post extends Geves_Model_Object
         
         return $this->_comments;
     }
-    
-    static public function getPostsList($limit = 10)
+
+    /**
+     * Get list of all posts
+     * 
+     * @todo Implement limit and paging 
+     * 
+     * @param integer $page
+     * @param integer $perPage 
+     */
+    static public function getPostsList($page = 0, $perPage = 10)
     {
-        // Get list of threads
         $params = array(
             'descending' => true
         );
         $posts = self::getDb()->view('post', 'recent-posts', $params, __CLASS__);
+        
+        return $posts;
+    }
+    
+    /**
+     * Get list of all posts tagged with a specified tag
+     * 
+     * @todo  Implemented limit and paging
+     * 
+     * @param string  $tag
+     * @param integer $page
+     * @param integer $perPage
+     */
+    static public function getPostsListByTag($tag, $page = 0, $perPage = 10)
+    {
+        $params = array(
+            'descending' => true,
+            'startkey'   => array($tag, array()),
+            'endkey'     => array($tag),
+        );
+        
+        $posts = self::getDb()->view('post', 'by-tag', $params, __CLASS__);
         
         return $posts;
     }

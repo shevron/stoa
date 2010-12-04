@@ -8,6 +8,12 @@
     </div>
 </div>
 
+<?php if ($this->tag): ?>
+<div class="post-list-title">
+    <h2>Posts tagged with '<span class="tag"><?php echo htmlspecialchars($this->tag)?></span>':</h2>
+</div>
+<?php endif; ?>
+
 <div class="post-list">
 <?php if (! empty($this->postList)): ?>
 <?php foreach($this->postList as $post): /* @var $post Stoa_Model_Post */ ?>

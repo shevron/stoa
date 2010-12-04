@@ -8,7 +8,13 @@ class PostController extends Zend_Controller_Action
      */
     public function indexAction()
     {
-        $this->view->postList = Stoa_Model_Post::getPostsList();
+        $tag = $this->_getParam('tag');
+        if ($tag) {
+            $this->view->postList = Stoa_Model_Post::getPostsListByTag($tag);
+            $this->view->tag = $tag;
+        } else {
+            $this->view->postList = Stoa_Model_Post::getPostsList();
+        }
     }
     
     /**

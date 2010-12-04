@@ -21,4 +21,12 @@ return array(
             'action'     => 'show'
         )
     ),
+    
+    'show-tag' => array(
+        'route' => 'tag/:tag',
+        'defaults' => array(
+            'controller' => 'post',
+            'action'     => 'index'
+        )
+    )
 );

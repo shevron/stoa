@@ -184,6 +184,10 @@ form .button-big {
     padding-top: 0.3em;
 }
 
+.post-list-title {
+    margin: 1em 0;	
+}
+
 .post-info {
 	font-size: 10pt;
 }
