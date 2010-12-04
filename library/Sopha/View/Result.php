@@ -141,6 +141,15 @@ class Sopha_View_Result implements Countable, ArrayAccess, SeekableIterator
             
         return $data;
     }
+
+    public function currentKey()
+    {
+        if (isset($this->_values[$this->_pointer]['key'])) {
+            return $this->_values[$this->_pointer]['key'];
+        } else {
+            return null;
+        }
+    }
     
     /**
      * SPL Countable Interface
@@ -155,7 +164,7 @@ class Sopha_View_Result implements Countable, ArrayAccess, SeekableIterator
     {
         return count($this->_values);
     }
-
+    
     /**
      * SPL SeekableIterator Interface (inherits from Iterator)
      */
@@ -172,7 +181,7 @@ class Sopha_View_Result implements Countable, ArrayAccess, SeekableIterator
     
     public function key()
     {
-        return $this->_values[$this->_pointer]['key'];
+        return $this->_pointer;
     }
     
     public function next()

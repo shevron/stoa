@@ -4,11 +4,10 @@ class Stoa_View_Helper_TagCloud extends Zend_View_Helper_Abstract
 {
     public function tagCloud($tag = null)
     {
-        if (! $tag) {
-            $tags = Stoa_Model_Tag::getPopularTags();
+        if ($tag) {
+            $tags = Stoa_Model_Tag::getRelatedTags($tag);
         } else {
-            //$tags = Stoa_Model_Tag::getRelatedTags($tag);
-            $tags = array();
+            $tags = Stoa_Model_Tag::getPopularTags();
         }
         
         $minWeight = min($tags);

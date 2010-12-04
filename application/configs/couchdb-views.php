@@ -95,11 +95,9 @@ EOJS
                 'reduce' => <<<EOJS
                     function (keys, values, rereduce) {
                         total = 0;
-                        
                         for (i = 0; i < values.length; i++) {
                             total += values[i];
                         }
-                        
                         return total;
                     }
 EOJS
@@ -109,16 +107,24 @@ EOJS
                     function(doc) {
                         if (doc['@doctype'] == 'Post' && doc.published) {
                             for (i = 0; i < doc.tags.length; i++) {
-                                relatedTags = {};
-                                for (j = 0; j < doc.tags.length; j++) {
-                                    if (j != i) { 
-                                        relatedTags[doc.tags[j]] = 1; 
-                                    }
+                            	tag = doc.tags[i];
+                            	for (j = i + 1; j < doc.tags.length; j++) {
+                                    relatedTag = doc.tags[j];
+                                    emit([tag, relatedTag], 1);
+                                    emit([relatedTag, tag], 1); 
                                 }
-                                
-                                emit(doc.tags[i], relatedTags);
                             }
                         }
+                    }
+EOJS
+                ,
+                'reduce' => <<<EOJS
+                	function(keys, values, rereduce) {
+                		total = 0;
+                		for (i = 0; i < values.length; i++) {
+                            total += values[i];
+                        }
+                        return total;
                     }
 EOJS
             )
