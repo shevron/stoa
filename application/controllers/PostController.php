@@ -52,49 +52,47 @@ class PostController extends Zend_Controller_Action
         $commentForm = new Stoa_Form_NewComment();
         $this->view->commentForm = $commentForm;
         
-        $id = $this->_getParam('id');
-        if ($id) {
+        if (($id = $this->_getParam('id')) != null) {
             $post = Stoa_Model_Post::getPostWithComments($id);
-            if ($post) {
-                $this->view->post = $post;
-                $this->view->comments = $post->getComments();
+        } elseif (($title = $this->_getParam('title')) != null) {
+            $psot = Stoa_Model_Post::getPostWithCommentsByTitle($title);
+        }
+        
+        if ($post) {
+            $this->view->post = $post;
+            $this->view->comments = $post->getComments();
+            
+            if ($this->_request->isPost()) {
+                $params = $this->_request->getParams();
+                if ($commentForm->isValid($params)) {
+            
+                    // Form is valid, save in DB
+                    $comment = new Stoa_Model_Comment(array(
+                        'post_id'      => $id,
+                        'author'       => $commentForm->getValue('author'),
+                        'author_email' => $commentForm->getValue('author_email'),
+                        'author_url'   => $commentForm->getValue('author_url'),
+                        'content'      => $commentForm->getValue('content'),
+                    ));
                 
-                if ($this->_request->isPost()) {
-                    $params = $this->_request->getParams();
-                    if ($commentForm->isValid($params)) {
-                
-                        // Form is valid, save in DB
-                        $comment = new Stoa_Model_Comment(array(
-                            'post_id'      => $id,
-                            'author'       => $commentForm->getValue('author'),
-                            'author_email' => $commentForm->getValue('author_email'),
-                            'author_url'   => $commentForm->getValue('author_url'),
-                            'content'      => $commentForm->getValue('content'),
-                        ));
-                    
-                        try {
-                            $comment->save();
-                            $this->view->message = new Geves_Message('Thank you for posting a comment!', Geves_Message::INFO);
-                            
-                            // Push new comment to comments array
-                            array_unshift($this->view->comments, $comment);
-                            
-                            // -- execution ends here --
+                    try {
+                        $comment->save();
+                        $this->view->message = new Geves_Message('Thank you for posting a comment!', Geves_Message::INFO);
                         
-                        } catch (Sopha_Exception $ex) {
-                            $this->view->message = new Geves_Message('Unable to save your comment: ' . $ex->getMessage());
-                            $commentForm->populate($params);
-                        }
-                   }
-                }
-                
-            } else {
-                // -- no such post --
-                $this->_redirect('/');
+                        // Push new comment to comments array
+                        array_unshift($this->view->comments, $comment);
+                        
+                        // -- execution ends here --
+                    
+                    } catch (Sopha_Exception $ex) {
+                        $this->view->message = new Geves_Message('Unable to save your comment: ' . $ex->getMessage());
+                        $commentForm->populate($params);
+                    }
+               }
             }
             
         } else {
-            // -- no ID provided
+            // -- no such post --
             $this->_redirect('/');
         }
     }

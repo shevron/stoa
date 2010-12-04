@@ -66,7 +66,12 @@ class Stoa_Form_NewComment extends Stoa_Form_Abstract
             'validators' => array(
                 'length' => array(
                     'validator' => 'StringLength',
-                    'options' => array('min' => 10)
+                    'options' => array(
+                    	'min' => 10,
+                        'messages' => array(
+                            Zend_Validate_StringLength::TOO_SHORT => 'Comment is too short - we expect 10 characters at least'
+                        )
+                    )
                 ),
                 'content' => array(
                     'validator' => 'Regex',
