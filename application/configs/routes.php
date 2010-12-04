@@ -20,5 +20,5 @@ return array(
             'controller' => 'post',
             'action'     => 'show'
         )
-    )
+    ),
 );

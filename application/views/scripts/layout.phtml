@@ -29,7 +29,10 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
     </div>
     
     <div id="page-sidebar">
-        This sidebar is left intentionally blank
+        <div class="sidebar-box">
+            <h2>Common Tags</h2>
+            <div><?php echo $this->tagCloud(); ?></div>
+        </div> 
     </div>
     
     <div id="page-footer">
