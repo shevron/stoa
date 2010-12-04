@@ -84,6 +84,22 @@ h1, h2, h3, h4 {
  * Page Content 
  */
 
+/**
+ * Tags
+ */
+
+ul.tag-cloud {
+	padding: 0;
+	margin: 0;
+	font-size: 11pt;
+}
+
+ul.tag-cloud li {
+	list-style-type: none;
+	display: inline;
+	padding: 0.2em;
+	vertical-align: middle;
+}
 
 /**
  * Forms
