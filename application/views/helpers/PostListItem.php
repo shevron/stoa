@@ -29,6 +29,10 @@ class Stoa_View_Helper_PostListItem extends Zend_View_Helper_Abstract
     /**
      * Get a preview of the post's content
      * 
+     * For now this "grabs" some HTML until we reach a certain byte limit. It
+     * could be made more context aware in the future (e.g. grab until a special
+     * tag is reached or grab the first paragraph).  
+     * 
      * @param  string  $text
      * @param  string  $url
      * @param  integer $limit
@@ -37,12 +41,11 @@ class Stoa_View_Helper_PostListItem extends Zend_View_Helper_Abstract
     protected function _previewSubString($text, $url, $limit = 1000)
     {
         if (strlen($text) > $limit) {
-            $text = $this->view->contentFormat(substr($text, 0, strpos($text, "\n", $limit))) . "\n" . 
+            $filter = new Geves_Filter_XmlTrim($limit);
+            $text = $filter->filter('<div>' . $text . '</div>') . 
                 '<a href="' . $url . '" class="read-more">[read more...]</a>'; 
-        } else {
-            $text = $this->view->contentFormat($text);
         } 
         
-        return $text; 
+        return $this->view->contentFormat($text); 
     }
 }

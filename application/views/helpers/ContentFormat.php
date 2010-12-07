@@ -12,6 +12,6 @@ class Stoa_View_Helper_ContentFormat extends Zend_View_Helper_Abstract
      */
     public function contentFormat($text)
     {
-        return nl2br(htmlspecialchars($text));
+        return $text;
     }
 }
