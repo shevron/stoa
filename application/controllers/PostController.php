@@ -61,7 +61,7 @@ class PostController extends Zend_Controller_Action
         if (($id = $this->_getParam('id')) != null) {
             $post = Stoa_Model_Post::getPostWithComments($id);
         } elseif (($title = $this->_getParam('title')) != null) {
-            $psot = Stoa_Model_Post::getPostWithCommentsByTitle($title);
+            $post = Stoa_Model_Post::getPostWithCommentsByTitle($title);
         }
         
         if ($post) {
