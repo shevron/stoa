@@ -113,6 +113,10 @@ class Stoa_Model_Post extends Geves_Model_Object
         
         $postAndComments = self::getDb()->view('post', 'with-comments', $params, Sopha_View_Result::RETURN_ARRAY);
         
+        if (count($postAndComments) == 0) { 
+            return null;
+        }
+        
         $post = $postAndComments->current();
         if ($post['@doctype'] != 'Post') {
             throw new ErrorException("Unexpected doctype in view result: " . $post['@doctype']);
