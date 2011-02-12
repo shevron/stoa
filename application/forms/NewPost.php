@@ -40,7 +40,23 @@ class Stoa_Form_NewPost extends Stoa_Form_Abstract
                 )
             ),
             'label' => 'Tags',
-            'description' => 'Comma separated list of tags for this post'
+            'description' => 'Comma separated list of tags for this post',
+            'size' => 40
+        ));
+        
+        $location = new Zend_Form_Element_Text(array(
+            'name' => 'location',
+            'required' => false,
+            'filters' => array('StringTrim'),
+            'validators' => array(
+                'content' => array(
+                    'validator' => 'Regex',
+                    'options' => array('pattern' => '/^[\p{L}\p{M}\p{N}_\-,\. ]+$/u')
+                )
+            ),
+            'label' => 'Location',
+            'description' => 'Your current location',
+            'size' => 40
         ));
         
         $text = new Zend_Form_Element_TextArea(array(
@@ -72,6 +88,7 @@ class Stoa_Form_NewPost extends Stoa_Form_Abstract
         $this->addElement($title)
              ->addElement($text)
              ->addElement($tags)
+             ->addElement($location)
              ->addElement($submit);
     }
 }

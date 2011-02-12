@@ -1,8 +1,93 @@
 <?php
 
 $this->headTitle('Create New Post');
-$this->headScript()->appendFile($this->baseUrl . '/scripts/wmd/wmd.js');
+$this->headScript()->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js')
+                   ->appendFile($this->baseUrl . '/scripts/wmd/wmd.js')
+                   ->appendFile($this->baseUrl . '/scripts/geo.js')
+                   ->appendScript(<<<EOJS
+	
+	$(document).ready(function() {
+		// Add button using DOM API
+		var input = document.getElementById('location');
+		var btn = document.createElement('input');
+		
+		btn.setAttribute('type', 'button');
+		btn.setAttribute('value', 'find');
+		
+		var throbber = document.createElement('img');
+		throbber.setAttribute('src', '{$this->baseUrl}/images/loading-small.gif');
+		throbber.setAttribute('alt', 'loading...');
+		throbber.setAttribute('id', 'location-throbber');
+		
+		if (geo_position_js.init()) {
+    		btn.onclick = function() { 
+    			$('#location-throbber').show();
+    			geo_position_js.getCurrentPosition(
+    				gotCurrentPosition, 
+    				errorGettingPosition, 
+    				{ enableHighAccuracy: true, options: 5000}
+				);
+    		};
+    	} else {
+    		btn.enabled = false;
+    	}
+		
+		input.parentNode.insertBefore(btn, input.nextSibling);
+		btn.parentNode.insertBefore(throbber, btn.nextSibling);
+		$('#location-throbber').hide();
+	});
+	
+	function gotCurrentPosition(pos) {
+		var input = document.getElementById('location');
+		var query = 'lat=' + pos.coords.latitude + '&lng=' + pos.coords.longitude;
+		
+		$.get('{$this->baseUrl}/location/address?' + query, function(data) { 
+			if (data.status == 'OK') {
+				// For now we just pick the first matched result 
+				input.value = data.results[0];
+				
+			} else if (data.status == 'ZERO_RESULTS')  {
+				alert('Unable to detect your location');
+				
+			} else {
+				alert('Error detecting your location: ' + data.message);
+				
+			}
+			
+		}).error(function() { 
+			alert('Failed fetching location information from server');
+			
+		}).complete(function() {
+			$('#location-throbber').hide();
+		});
+	} 
+	
+	function errorGettingPosition(pos) {
+		$('#location-throbber').hide();
+		alert('error getting your location: ' + pos.message);
+	}
 
+EOJS
+);
+
+/**
+ * if(geo_position_js.init()){
+			geo_position_js.getCurrentPosition(success_callback, error_callback, {enableHighAccuracy:true,options:5000});
+		} else {
+			alert("Functionality not available");
+		}
+
+		function success_callback(p)
+		{
+			alert('lat='+p.coords.latitude.toFixed(2)+';lon='+p.coords.longitude.toFixed(2));
+		}
+		
+		function error_callback(p)
+		{
+			alert('error='+p.message);
+		}
+
+ */
 ?>
 <h2>Create a new post</h2>
 <div class="new-post-form">

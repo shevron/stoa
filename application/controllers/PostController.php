@@ -34,6 +34,7 @@ class PostController extends Zend_Controller_Action
                     'title'      => $form->getValue('title'),
                     'content'    => $form->getValue('content'),
                     'tags'       => $this->_splitPostTags($form->getValue('tags')),
+                    'location'   => $form->getValue('location'),
                     'published'  => true,
                 ));
                 

@@ -14,7 +14,11 @@ $this->headTitle($this->post->title);
 <div class="post">
     <h2><?php echo htmlspecialchars($this->post->title) ?></h2>
     <div class="post-info">
-        <span><?php echo $this->timeFormat($this->post->created_at) ?></span>
+        <span><?php echo $this->timeFormat($this->post->created_at) ?>
+<?php if ($this->post->location): ?>
+        - <?php echo htmlspecialchars($this->post->location)?>
+<?php endif ?>
+        </span>
         <span><?php echo $this->tagsFormat($this->post->tags) ?></span>
     </div>
     
