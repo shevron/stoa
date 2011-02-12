@@ -36,7 +36,7 @@ class Stoa_Form_NewPost extends Stoa_Form_Abstract
             'validators' => array(
                 'content' => array(
                     'validator' => 'Regex',
-                    'options' => array('pattern' => '/^[\w\-, ]+$/u')
+                    'options' => array('pattern' => '/^[\p{L}\p{M}\p{N}_\-, ]+$/u')
                 )
             ),
             'label' => 'Tags',
