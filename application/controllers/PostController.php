@@ -31,11 +31,15 @@ class PostController extends Zend_Controller_Action
                 
                 // Form is valid, save in DB
                 $post = new Stoa_Model_Post(array(
-                    'title'      => $form->getValue('title'),
-                    'content'    => $form->getValue('content'),
-                    'tags'       => $this->_splitPostTags($form->getValue('tags')),
-                    'location'   => $form->getValue('location'),
-                    'published'  => true,
+                    'title'        => $form->getValue('title'),
+                    'content'      => $form->getValue('content'),
+                    'content_type' => 'text/html',
+                    'tags'         => $this->_splitPostTags($form->getValue('tags')),
+                    'published'    => true,
+                    'location'     => array(
+                        'name'     => $form->getValue('location'),
+                        'coords'   => array(0.0, 0.0)
+                    )
                 ));
                 
                 try {
