@@ -46,9 +46,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headLink()->appendStylesheet($view->baseUrl . '/css/default.css');
 
         // Set user info
-        $session = $this->getResource('session');
-        $view->userLoggedIn = $session->logged_in;
-        $view->userInfo = $session->user;
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $view->identity = Zend_Auth::getInstance()->getIdentity();
+        }
         
         $view->addHelperPath(APPLICATION_PATH . '/views/helpers', 'Stoa_View_Helper_');
         
@@ -123,14 +123,29 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initSession()
     {
-        $this->bootstrap(array('autoloader', 'request'));
+        $this->bootstrap(array('autoloader', 'request', 'config'));
         
-        Zend_Session::start(array(
-           'name'              => 'STOASESSID',
+        $sessionOpts = $this->getOption('session');
+        if ($sessionOpts && isset($sessionOpts['name'])) { 
+            $sessName = $sessionOpts['name']; 
+        } else {
+            $sessName = 'stoaSession';
+        }
+        
+        Zend_Session::setOptions(array(
+           'name'              => $sessName,
            'use_only_cookies'  => true,
            'cookie_path'       => $this->getResource('request')->getBaseUrl() 
         ));
+            
+        // We only start the session automatically if it was already started 
+        // at some point
+        if (isset($_COOKIE[$sessName])) {
+            return new Zend_Session_Namespace('stoa');
+        }
         
-        return new Zend_Session_Namespace('stoa');
+        Zend_Auth::getInstance()->setStorage(
+            new Geves_Auth_Storage_LazySession()
+        );
     }
 }
