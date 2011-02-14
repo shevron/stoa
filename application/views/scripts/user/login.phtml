@@ -1,0 +1,14 @@
+<?php
+
+$this->headTitle("Log In");
+
+?>
+<h2>Log In</h2>
+<?php if ($this->message): ?>
+<div class="messages">
+  <?php echo $this->message($this->message); ?>
+</div>
+<?php endif; ?>
+<div class="login-form">
+    <?php echo $this->form ?>
+</div>
