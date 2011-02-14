@@ -161,14 +161,14 @@ form .button-big {
     font-size: 10pt;
 }
 
-.comment-form dt {
+.comment-form dt, .login-form dt {
 	width: 12em;
 }
 
 .comment-form dd {
 	margin-bottom: 0.5em;
 }
-	
+
 /**
  * Post List
  */
@@ -222,6 +222,11 @@ form .button-big {
 .info {
 	border-color: #A3C6FF;
     background: #EDF4FF url(../images/information.png) 3px center no-repeat; 
+}
+
+.error {
+	border-color: #FFA3A3;
+	background: #FFEDED url(../images/error.png) 3px center no-repeat;
 }
 
 /**
