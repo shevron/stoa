@@ -59,7 +59,7 @@ class Stoa_Form_NewPost extends Stoa_Form_Abstract
             'size' => 40
         ));
         
-        $text = new Zend_Form_Element_TextArea(array(
+        $text = new Zend_Form_Element_Textarea(array(
             'name' => 'content',
             'required' => true,
             'filters' => array('StringTrim'),

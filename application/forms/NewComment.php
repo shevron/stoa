@@ -59,7 +59,7 @@ class Stoa_Form_NewComment extends Stoa_Form_Abstract
             'description' => 'we will link to this address, if you provide one'
         ));
         
-        $text = new Zend_Form_Element_TextArea(array(
+        $text = new Zend_Form_Element_Textarea(array(
             'name' => 'content',
             'required' => true,
             'filters' => array('StringTrim'),
