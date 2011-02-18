@@ -9,6 +9,8 @@ class Stoa_View_Helper_TagCloud extends Zend_View_Helper_Abstract
         } else {
             $tags = Stoa_Model_Tag::getPopularTags();
         }
+
+	if (empty($tags)) return;
         
         $minWeight = min($tags);
         $maxWeight = max($tags);
