@@ -44,6 +44,19 @@ class UserController extends Zend_Controller_Action
         
         $this->view->form = $form;
     }
+
+    public function logoutAction()
+    {
+        $token = $this->_getParam('requestToken');
+
+        /** @todo: XSRF protection **/
+        if ($this->_session) {
+            Zend_Auth::getInstance()->clearIdentity();
+            Zend_Session::destroy();
+        }
+
+        $this->_redirect('/');
+    }
     
     protected function _getAuthAdapter($username, $password)
     {
