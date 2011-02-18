@@ -16,8 +16,6 @@ class Geves_Filter_XmlTrim implements Zend_Filter_Interface
      */
     protected $_writer = null;
     
-    protected $_byteCounter = 0;
-    
     protected $_maxBytes = 0;
     
     public function __construct($maxBytes)
@@ -49,15 +47,14 @@ class Geves_Filter_XmlTrim implements Zend_Filter_Interface
         $reader = $this->_reader; /* @var $reader XMLReader */
         $writer = $this->_writer; /* @var $writer XMLWriter */
         
-        while ($this->_byteCounter < $this->_maxBytes) {
+        while (($byteCounter = strlen($writer->flush(false))) < $this->_maxBytes) {
             if (! $reader->read()) break;
 
             if ($reader->nodeType == XMLReader::ELEMENT) { 
                 // Attempt to write entire XML subtree as is
                 $xml = $reader->readOuterXml();
                 $xmlLen = strlen($xml);
-                if ($xmlLen + $this->_byteCounter <= $this->_maxBytes) { 
-                    $this->_byteCounter += $xmlLen;
+                if ($xmlLen + $byteCounter <= $this->_maxBytes) { 
                     $writer->writeRaw($xml);
                     $reader->next();
                     
@@ -70,12 +67,12 @@ class Geves_Filter_XmlTrim implements Zend_Filter_Interface
 
             // If subtree is in fact a text node, trim it
             elseif ($reader->nodeType == XMLReader::TEXT) {
-                $canRead = $this->_maxBytes - $this->_byteCounter; 
+                $canRead = $this->_maxBytes - $byteCounter; 
                 $str = substr($reader->value, 0, $canRead);
                 $writer->text($str);
                 break;
             }
-        }
+        } 
     }
     
     protected function _writeCurrentElement()
