@@ -19,7 +19,7 @@
 <?php endif; ?>
 
 <div class="post-list">
-<?php if (! empty($this->postList)): ?>
+<?php if (count($this->postList)): ?>
 <?php foreach($this->postList as $post): /* @var $post Stoa_Model_Post */ ?>
     <?php echo $this->postListItem($post); ?>
 <?php endforeach; ?>
