@@ -16,7 +16,7 @@ class Stoa_View_Helper_PostListItem extends Zend_View_Helper_Abstract
                         htmlspecialchars($post->title) . '</a></h3>' .
                     '<div class="post-info">' . 
                         '<span>' . $this->view->timeFormat($post->created_at) . 
-                        ($post->location ? ' - ' . htmlspecialchars($post->location) : '') . 
+                        ($post->location ? ' - ' . $this->view->locationHref($post->location) : '') . 
                         '</span>' .
                         '<span>tags: ' . $this->view->tagsFormat($post->tags) . '</span>' . 
                     '</div>' .
