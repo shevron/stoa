@@ -64,6 +64,30 @@ class Stoa_Model_Post extends Geves_Model_Object
     }
 
     /**
+     * Get an ACL object for this post. 
+     *
+     * For now this is generic for all posts, but in the future may be post 
+     * specific
+     *
+     * @return Zend_Acl
+     */
+    public function getAcl()
+    {
+        $acl = new Zend_Acl();
+        $acl->addRole('guest')
+            ->addRole('user', 'guest')
+            ->addRole('admin');
+
+        // Guests can view and comment
+        $acl->allow('guest', null, array('view', 'comment'));
+
+        // Admin can do anything
+        $acl->allow('admin');
+
+        return $acl;
+    }
+
+    /**
      * Get list of all posts
      * 
      * @todo Implement limit and paging 

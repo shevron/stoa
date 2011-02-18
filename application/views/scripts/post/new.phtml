@@ -72,6 +72,11 @@ EOJS
 
 ?>
 <h2>Create a new post</h2>
+<?php if ($this->error): ?>
+<div class="messages">
+    <?php echo $this->message($this->error); ?>
+</div>
+<?php endif; ?>
 <div class="new-post-form">
     <?php echo $this->form ?>
 </div>

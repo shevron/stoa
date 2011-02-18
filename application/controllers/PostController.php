@@ -23,45 +23,54 @@ class PostController extends Zend_Controller_Action
      */
     public function newAction()
     {
-        $form = new Stoa_Form_NewPost();
+        $identity = Zend_Auth::getInstance()->getIdentity();
+        $post = new Stoa_Model_Post();
+
+        /** @todo role should come from identity, not be hard-coded **/
+        if ($identity && $post->getAcl()->isAllowed('admin', null, 'create')) {
+            $form = new Stoa_Form_NewPost();
         
-        if ($this->_request->isPost()) {
-            $params = $this->_request->getParams();
-            if ($form->isValid($params)) {
+            if ($this->_request->isPost()) {
+                $params = $this->_request->getParams();
+                if ($form->isValid($params)) {
                 
-                // Form is valid, save in DB
-                $post = new Stoa_Model_Post(array(
-                    'title'        => $form->getValue('title'),
-                    'content'      => $form->getValue('content'),
-                    'content_type' => 'text/html',
-                    'tags'         => $this->_splitPostTags($form->getValue('tags')),
-                    'published'    => true,
-                    'location'     => array(
-                        'name'     => $form->getValue('location'),
-                        'coords'   => array(0.0, 0.0)
-                    )
-                ));
+                    // Form is valid, save in DB
+                    $post->fromArray(array(
+                        'title'        => $form->getValue('title'),
+                        'content'      => $form->getValue('content'),
+                        'content_type' => 'text/html',
+                        'tags'         => $this->_splitPostTags($form->getValue('tags')),
+                        'published'    => true,
+                        'location'     => array(
+                            'name'     => $form->getValue('location'),
+                            'coords'   => array(0.0, 0.0)
+                        )
+                    ));
                 
-                try {
-                    $post->save();
-                    $this->_redirect('/');
+                    try {
+                        $post->save();
+                        $this->_redirect('/');
                     
-                    // -- execution ends here --
+                        // -- execution ends here --
                     
-                } catch (Sopha_Exception $ex) {
-                    // TODO: Propagate error to user ?
-                    throw $ex;
+                    } catch (Sopha_Exception $ex) {
+                        // TODO: Propagate error to user ?
+                        throw $ex;
+                    }
                 }
             }
-        }
         
-        $this->view->form = $form;
+            $this->view->form = $form;
+
+        } else {
+            $this->view->error = new Geves_Message("You are not authorized to perform this operation"); 
+        }
     }
     
     public function showAction()
     {
         $commentForm = new Stoa_Form_NewComment();
-        $this->view->commentForm = $commentForm;
+        $this->view->commetForm = $commentForm;
         
         if (($id = $this->_getParam('id')) != null) {
             $post = Stoa_Model_Post::getPostWithComments($id);
