@@ -5,6 +5,13 @@
  * 
  */
 
+// Show common tags in sidebar
+$this->placeholder('sidebar')->append(<<<EOHTML
+    <h3>Common Tags</h3>
+    {$this->tagCloud()}
+EOHTML
+);
+
 $this->headTitle($this->post->title);
 ?>
 <?php if ($this->message): ?>

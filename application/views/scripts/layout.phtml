@@ -1,6 +1,11 @@
 <?php
-
+ 
 $this->headTitle('My Blog');
+
+$this->placeholder('sidebar')
+      ->setPrefix('<div class="sidebar-box">')
+      ->setSeparator('</div><div class="sidebar-box">')
+      ->setPostfix('</div>');        
 
 echo '<?xml version="1.0" encoding="UTF-8" ?>';
 ?> 
@@ -32,10 +37,7 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
     </div>
     
     <div id="page-sidebar">
-        <div class="sidebar-box">
-            <h2>Common Tags</h2>
-            <div><?php echo $this->tagCloud(); ?></div>
-        </div> 
+        <?php echo $this->placeholder('sidebar'); ?>
     </div>
     
     <div id="page-footer">

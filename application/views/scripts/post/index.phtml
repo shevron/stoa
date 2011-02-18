@@ -1,3 +1,26 @@
+<?php
+
+if ($this->tag) {
+    $this->placeholder('sidebar')->append(<<<EOHTML
+        <h3>Related Tags</h3> 
+        {$this->tagCloud($this->tag)}
+EOHTML
+    );
+
+    $this->headTitle("posts tagged with '{$this->tag}'");
+} else {
+    $this->headTitle("recent posts");
+}
+
+// Show common tags in sidebar
+$this->placeholder('sidebar')->append(<<<EOHTML
+    <h3>Common Tags</h3>
+    {$this->tagCloud()}
+EOHTML
+);
+
+?>
+
 <div class="post-list-toolbox">
     <div class="post-list-paginator">
         <a href="#">first</a> &nbsp;
@@ -11,10 +34,6 @@
 <?php if ($this->tag): ?>
 <div class="post-list-title">
     <h2>Posts tagged with '<span class="tag"><?php echo htmlspecialchars($this->tag)?></span>':</h2>
-    <div class="related-tags">
-        <span>Related Tags:</span> 
-        <?php echo $this->tagCloud($this->tag); ?>
-    </div> 
 </div>
 <?php endif; ?>
 

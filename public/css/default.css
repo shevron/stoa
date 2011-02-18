@@ -43,6 +43,14 @@ h1, h2, h3, h4 {
 	right: 1em;
 }
 
+#page-sidebar .sidebar-box {
+    margin-bottom: 2em;
+}
+
+#page-sidebar .sidebar-box h3 {
+    font-size: 12pt;
+}
+
 #page-footer {
 	clear: both;
 	margin: 0;
