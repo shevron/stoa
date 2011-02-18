@@ -219,6 +219,10 @@ form .button-big {
  * Messages 
  */
 
+.messages {
+    margin: 0.5em 0;
+}
+
 .message {
 	border: 1px solid; 
 	padding: 3px;
