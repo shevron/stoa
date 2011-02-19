@@ -70,7 +70,7 @@ class PostController extends Zend_Controller_Action
     public function showAction()
     {
         $commentForm = new Stoa_Form_NewComment();
-        $this->view->commetForm = $commentForm;
+        $this->view->commentForm = $commentForm;
         
         if (($id = $this->_getParam('id')) != null) {
             $post = Stoa_Model_Post::getPostWithComments($id);
@@ -108,7 +108,7 @@ class PostController extends Zend_Controller_Action
                         $this->view->message = new Geves_Message('Unable to save your comment: ' . $ex->getMessage());
                         $commentForm->populate($params);
                     }
-               }
+                }
             }
             
         } else {
