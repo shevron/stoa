@@ -201,7 +201,7 @@ class Sopha_Db
     {
         require_once 'Sopha/Json.php';
         
-        if ($url) {
+        if ($url && substr($url, 0, 5) != 'http:') {
         	$url = self::encodeDocPath($url);
         }
         
@@ -272,6 +272,35 @@ class Sopha_Db
                 
             case 404:
                 return false;
+                break;
+                
+            default:
+                require_once 'Sopha/Db/Exception.php';
+                throw new Sopha_Db_Exception("Unexpected response from server: " . 
+                	"{$response->getStatus()} {$response->getMessage()}", $response->getStatus());
+                break;
+        }
+    }
+    
+    /**
+     * Bulk-update a set of documents
+     * 
+     * If documents contain the _id and _rev parameters, they will be updated. 
+     * If these parameters are ommitted, new documents will be created. 
+     * An array of document IDs and revision numbers will be returned. 
+     * 
+     * @param  array $docs an array of documents to update / insert
+     * @return array
+     */
+    public function bulkUpdate(array $docs)
+    {
+        $url = $this->_db_uri . '/_bulk_docs';
+        $response = Sopha_Http_Request::post($url, Sopha_Json::encode(array('docs' => $docs)));
+        
+        switch($response->getStatus()) { 
+            case 200:
+            case 201:
+                return $response->getDocument();
                 break;
                 
             default:
