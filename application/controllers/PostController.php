@@ -88,7 +88,7 @@ class PostController extends Zend_Controller_Action
             
                     // Form is valid, save in DB
                     $comment = new Stoa_Model_Comment(array(
-                        'post_id'      => $id,
+                        'post_id'      => $post->getId(),
                         'author'       => $commentForm->getValue('author'),
                         'author_email' => $commentForm->getValue('author_email'),
                         'author_url'   => $commentForm->getValue('author_url'),
