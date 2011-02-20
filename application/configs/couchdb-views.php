@@ -22,9 +22,9 @@ EOJS
                 'map' => <<<EOJS
                     function(doc) {
                         if (doc['@doctype'] == 'Post') {
-                            emit([doc._id, "I"], doc);
+                            emit([doc._id, "I"], null);
                         } else if (doc['@doctype'] == 'Comment') {
-                            emit([doc.post_id, doc.created_at], doc);
+                            emit([doc.post_id, doc.created_at], null);
                         }
                     }
 EOJS
@@ -70,7 +70,7 @@ EOJS
                 'map' => <<<EOJS
                     function(doc) {
                         if (doc['@doctype'] == 'Post' && doc.published) {
-                            emit(doc.normalized_title, doc);
+                            emit(doc.normalized_title, null);
                         }
                     }
 EOJS

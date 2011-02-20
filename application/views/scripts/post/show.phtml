@@ -12,12 +12,13 @@ $this->placeholder('sidebar')->append(<<<EOHTML
 EOHTML
 );
 
-$this->headTitle($this->post->title);
+if ($this->post) $this->headTitle($this->post->title);
 ?>
 <?php if ($this->message): ?>
     <?php echo $this->message($this->message); ?>
 <?php endif; ?>
 
+<?php if ($this->post): ?>
 <div class="post">
     <h2><?php echo htmlspecialchars($this->post->title) ?></h2>
     <div class="post-info">
@@ -54,3 +55,4 @@ $this->headTitle($this->post->title);
 <div class="comment-form">
     <?php echo $this->commentForm; ?>
 </div>
+<?php endif; ?>

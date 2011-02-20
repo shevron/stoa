@@ -130,13 +130,14 @@ class Stoa_Model_Post extends Geves_Model_Object
     static public function getPostWithComments($postId)
     {
         $params = array(
-            'descending' => true,
-            'startkey'   => array($postId, array()),
-            'endkey'     => array($postId)
+            'descending'   => true,
+            'startkey'     => array($postId, array()),
+            'endkey'       => array($postId),
+            'include_docs' => true
         );
         
         $postAndComments = self::getDb()->view('post', 'with-comments', $params, Sopha_View_Result::RETURN_ARRAY);
-        
+       
         if (count($postAndComments) == 0) { 
             return null;
         }
@@ -154,6 +155,21 @@ class Stoa_Model_Post extends Geves_Model_Object
         return $post;
     }
     
+    static public function getPostWithCommentsByTitle($title)
+    {
+        $params = array(
+            'key' => $title,
+        );
+        
+        $post = self::getDb()->view('post', 'by-normalized-title', $params);
+        
+        if (count($post) == 0) { 
+            return null;
+        }
+       
+        return self::getPostWithComments($post->currentId());
+    }
+
     static protected function _normalizeTitle($title)
     {
         $normalized = strtolower(preg_replace(array('/[^\w\s]+/u', '/\s+/'), array('', '-'), $title));

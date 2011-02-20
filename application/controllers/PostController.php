@@ -113,7 +113,7 @@ class PostController extends Zend_Controller_Action
             
         } else {
             // -- no such post --
-            $this->_redirect('/');
+            $this->view->message = new Geves_Message('Unable to find requested post. Maybe it was deleted?');
         }
     }
     

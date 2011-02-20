@@ -14,8 +14,16 @@ return array(
         )
     ),
     
+    'show-post-id' => array(
+        'route' => 'post/id/:id',
+        'defaults' => array(
+            'controller' => 'post',
+            'action'     => 'show'
+        )
+    ),
+    
     'show-post' => array(
-        'route' => 'post/:id',
+        'route' => 'post/:title',
         'defaults' => array(
             'controller' => 'post',
             'action'     => 'show'

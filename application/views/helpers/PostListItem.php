@@ -10,7 +10,7 @@ class Stoa_View_Helper_PostListItem extends Zend_View_Helper_Abstract
      */
     public function postListItem(Stoa_Model_Post $post)
     {
-        $postUrl = $this->view->baseUrl . '/post/' . $post->getId();
+        $postUrl = $this->view->baseUrl . '/post/' . $post->normalized_title; 
         $html = '<div class="post">' .
                     '<h3><a href="' . $postUrl . '">' . 
                         htmlspecialchars($post->title) . '</a></h3>' .
