@@ -122,30 +122,28 @@ class Sopha_View_Result implements Countable, ArrayAccess, SeekableIterator
     }
     
     /**
-     * Get the metadata of a returned view record. 
-     * 
-     * The metadata of a returned record should normaly contain the id and key
-     * of each returned document.
-     * 
-     * @param  integer $offset Record offset. If not specified, will use current
-     * @return array
+     * Get the key of the current view item
+     *
+     * @return string
      */
-    public function getViewMetadata($offset = null)
-    {
-        if ($offset === null) $offset = $this->_pointer;
-        
-        if (! isset($this->_values[$offset])) return null;
-        
-        $data = $this->_values[$offset];
-        unset($data['value']);
-            
-        return $data;
-    }
-
     public function currentKey()
     {
         if (isset($this->_values[$this->_pointer]['key'])) {
             return $this->_values[$this->_pointer]['key'];
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Get the ID of the document that emitted the current view item
+     *
+     * @return string
+     */
+    public function currentId()
+    {
+        if (isset($this->_values[$this->_pointer]['id'])) {
+            return $this->_values[$this->_pointer]['id'];
         } else {
             return null;
         }
