@@ -45,11 +45,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         // Add some stylesheet
         $view->headLink()->appendStylesheet($view->baseUrl . '/css/default.css');
 
-        // Set user info
-        if (Zend_Auth::getInstance()->hasIdentity()) {
-            $view->identity = Zend_Auth::getInstance()->getIdentity();
-        }
-        
         $view->addHelperPath(APPLICATION_PATH . '/views/helpers', 'Stoa_View_Helper_');
         
         // Add the Zendx_Jquery helper path
@@ -143,9 +138,5 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         if (isset($_COOKIE[$sessName])) {
             return new Zend_Session_Namespace('stoa');
         }
-        
-        Zend_Auth::getInstance()->setStorage(
-            new Geves_Auth_Storage_LazySession()
-        );
     }
 }
