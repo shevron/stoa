@@ -132,7 +132,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
            'use_only_cookies'  => true,
            'cookie_path'       => $this->getResource('request')->getBaseUrl() 
         ));
-            
+
+        Zend_Auth::getInstance()->setStorage(new Geves_Auth_Storage_LazySession());        
+    
         // We only start the session automatically if it was already started 
         // at some point
         if (isset($_COOKIE[$sessName])) {
