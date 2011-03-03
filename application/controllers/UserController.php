@@ -9,7 +9,6 @@ class UserController extends Zend_Controller_Action
     public function loginAction()
     {
         if (Stoa_Model_User::getCurrentUser()->isAuthenticated()) {
-        if ($this->_session) { 
             // User is already logged in
             $this->_redirect('/');
         }
@@ -26,7 +25,7 @@ class UserController extends Zend_Controller_Action
                 if ($user) { 
                     $this->_redirect('/');
                 } else {
-                    $this->view->message = new Geves_Message(array_shift($result->getMessages()));
+                    $this->view->message = new Geves_Message("Wrong user name or password");
                 }
             }
         }
