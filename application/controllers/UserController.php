@@ -38,7 +38,7 @@ class UserController extends Zend_Controller_Action
         /** @todo: XSRF protection **/
         /* $token = $this->_getParam('requestToken'); */
         
-        Stoa_Model_User::destroySession();
+        Stoa_Model_User::logoutCurrentUser();
         $this->_redirect('/');
     }
 }

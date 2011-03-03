@@ -50,7 +50,10 @@ class Stoa_Model_User implements Zend_Acl_Role_Interface
             $user->_username = $username;
             $user->_isAuthenticated = true;
             $user->_roles[0] = 'admin';
+            
+            Zend_Auth::getInstance()->getStorage()->write($user);
             return $user;
+
         } else {
             return null;
         }
@@ -58,7 +61,18 @@ class Stoa_Model_User implements Zend_Acl_Role_Interface
 
     static public function getCurrentUser()
     {
-        return new self(); 
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            return Zend_Auth::getInstance()->getIdentity();
+ 
+        } else {
+            return new self(); 
+        }
+    }
+
+    static public function logoutCurrentUser()
+    {
+        Zend_Auth::getInstance()->clearIdentity();
+        Zend_Session::destroy();
     }
 
     static protected function _getAuthAdapter($username, $password)
