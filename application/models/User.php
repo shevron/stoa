@@ -3,6 +3,13 @@
 class Stoa_Model_User implements Zend_Acl_Role_Interface
 {
     /**
+     * Authentication and user management configuration
+     *
+     * @var Zend_Config
+     */
+    static protected $_config = null;
+
+    /**
      * Is the user authenticated?
      *
      * @var boolean
@@ -75,9 +82,37 @@ class Stoa_Model_User implements Zend_Acl_Role_Interface
         Zend_Session::destroy();
     }
 
+    static public function setConfig(Zend_Config $config)
+    {
+        self::$_config = $config;
+    }
+
+    static public function getConfig()
+    {
+        return self::$_config;
+    }
+
     static protected function _getAuthAdapter($username, $password)
     {
-        return new Geves_Auth_Adapter_Dummy($username, $password);
+        $config = self::$_config; 
+        if ($config) {
+            $adapter = $config->adapter;
+            $options = $config->options;
+        } else {
+            $adapter = 'dummy';
+            $options = new Zend_Config(array());
+        }
+
+        switch($adapter) {
+            case 'config':
+                return new Geves_Auth_Adapter_Config($username, $password, $options);
+                break;
+
+            case 'dummy':
+            default:
+                return new Geves_Auth_Adapter_Dummy($username, $password);
+                break;
+        }
     }
 }
 

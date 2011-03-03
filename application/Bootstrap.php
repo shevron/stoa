@@ -133,6 +133,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
            'cookie_path'       => $this->getResource('request')->getBaseUrl() 
         ));
 
+        Stoa_Model_User::setConfig(new Zend_Config($this->getOption('auth')));
         Zend_Auth::getInstance()->setStorage(new Geves_Auth_Storage_LazySession());        
     
         // We only start the session automatically if it was already started 
